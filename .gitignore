@@ -1,0 +1,17 @@
+.installed.cfg
+*.pyc
+*.pyc
+*.egg
+*.egg-info
+*~
+/bootstrap.py
+/buildout.cfg
+/pip-selfcheck.json
+/bin/
+/develop-eggs/
+/eggs/
+/include/
+/lib/
+/parts/
+/src/
+/var/
