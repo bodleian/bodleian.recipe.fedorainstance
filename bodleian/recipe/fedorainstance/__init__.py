@@ -36,9 +36,7 @@ MESSAGE_NOT_SUPPORTED_VERSION = "Specified version %s is not supported"
 
 PACKAGES = {
     FEDORA4: "https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-4.2.0/fcrepo-webapp-4.2.0.war",
-    #"4": "http://localhost:8000/fcrepo-webapp-4.2.0.war",
-    FEDORA3: "http://10.0.2.15:8000/fcrepo-installer-3.7.0.jar"
-    #http://downloads.sourceforge.net/project/fedora-commons/fedora/3.7.0/fcrepo-installer-3.7.0.jar?r=&ts=1424278682&use_mirror=waia"
+    FEDORA3: "http://downloads.sourceforge.net/project/fedora-commons/fedora/3.7.0/fcrepo-installer-3.7.0.jar?r=&ts=1424278682&use_mirror=waia"
 }
 
 class Fedora4Worker:
@@ -76,7 +74,6 @@ class Fedora3Worker:
         destination = os.path.join( 
             buildout[BUILDOUT]['parts-directory'], 
             self.name)
-        import pdb; pdb.set_trace()
         if not os.path.isdir(destination):
             os.makedirs(destination)
         options.setdefault(FIELD_DESTINATION, destination) 
