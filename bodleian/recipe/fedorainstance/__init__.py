@@ -54,16 +54,19 @@ class Fedora3Worker:
         self.options = options
         self.logger = logger
 
-        destination = os.path.join(
+        destination = os.path.join( 
             buildout['buildout']['parts-directory'], 
             self.name)
         if not os.path.isdir(destination):
             os.makedirs(destination)
         options.setdefault('destination', destination) 
 
-        self.options['url'] = PACKAGES[options['version']]
-        self.options['download-only'] = 'true'
-        self.download = downloadRecipe(buildout, name, options)
+        download_options = {
+            'url': PACKAGES[options['version']],
+            'download-only': 'true',
+            'destination': '/tmp'
+        }
+        self.download = downloadRecipe(buildout, name, download_options)
 
     def _generate_from_template(self, **kwargs):
         destination = kwargs['destination']
@@ -96,8 +99,14 @@ class Fedora3Worker:
             name='install.properties'
         )
         command = '/usr/bin/java -jar %s /tmp/install.properties' % output[0]
-        print command
         os.system(command)
+        if 'unpack-war-file' in self.options and self.options['unpack-war-file'] == 'true':
+            fedora_war = os.path.join(self.options['destination'],
+                                      "install", "fedora.war")
+            tomcat_webapp = os.path.join(self.options['tomcat-home'], 'webapps', self.options['tomcat-url-suffix'])
+            self.logger.info('Unpack war file %s to %s', fedora_war, tomcat_webapp)
+            with zipfile.ZipFile(fedora_war) as zip_file:
+                zip_file.extractall(tomcat_webapp)
 
     @property
     def template_dir(self):
