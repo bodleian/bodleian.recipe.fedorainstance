@@ -51,6 +51,7 @@ Here is what you see::
     >>> print glob.glob("/tmp/bodleian.recipe.fedorainstance.test/fedora/*")
     ['/tmp/bodleian.recipe.fedorainstance.test/fedora/you_have_tested_it']
     >>> shutil.rmtree("/tmp/bodleian.recipe.fedorainstance.test")
+    >>> os.unlink("buildout.cfg")
 
 
 
