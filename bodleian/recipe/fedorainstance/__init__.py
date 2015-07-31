@@ -17,6 +17,7 @@ from hexagonit.recipe.download import Recipe as downloadRecipe
 
 PACKAGES = {
     "4": "https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-4.2.0/fcrepo-webapp-4.2.0.war",
+    #"4": "http://localhost:8000/fcrepo-webapp-4.2.0.war",
     "3": "http://10.0.2.15:8000/fcrepo-installer-3.7.0.jar"
     #http://downloads.sourceforge.net/project/fedora-commons/fedora/3.7.0/fcrepo-installer-3.7.0.jar?r=&ts=1424278682&use_mirror=waia"
 }

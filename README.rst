@@ -26,7 +26,7 @@ Here is an example configuration::
     ... [fedorainstance]
     ... recipe = bodleian.recipe.fedorainstance
     ... version = 4
-    ... tomcat-app-dir = /tmp/bodleian.recipe.fedorainstance.test
+    ... tomcat-home = /tmp/tomcat
     ... tomcat-url-suffix = fedora
     ... """
     >>> with open('buildout.cfg', 'w') as f:
@@ -41,16 +41,16 @@ Here is what you see::
     >>> main(args)
     Installing fedorainstance.
     Downloading https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-4.2.0/fcrepo-webapp-4.2.0.war
-    fedorainstance: Extracting package to /tmp/bodleian.recipe.fedorainstance.test/fedora
+    fedorainstance: Extracting package to /tmp/tomcat/webapps/fedora
 
 .. testcode::
    :hide:
 
     >>> # test verification
     >>> import glob
-    >>> print glob.glob("/tmp/bodleian.recipe.fedorainstance.test/fedora/*")
-    ['/tmp/bodleian.recipe.fedorainstance.test/fedora/you_have_tested_it']
-    >>> shutil.rmtree("/tmp/bodleian.recipe.fedorainstance.test")
+    >>> print glob.glob("/tmp/tomcat/webapps/fedora/*")
+    ['/tmp/tomcat/webapps/fedora/you_have_tested_it']
+    >>> shutil.rmtree("/tmp/tomcat")
     >>> os.unlink("buildout.cfg")
 
 
