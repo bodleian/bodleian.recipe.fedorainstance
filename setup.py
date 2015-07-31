@@ -11,7 +11,7 @@ def read(name):
     return open(os.path.join(os.path.dirname(__file__), name)).read()
 
 
-requires = ['setuptools', 'hexagonit.recipe.download', ]
+requires = ['setuptools', 'hexagonit.recipe.download', 'jinja2']
 
 if sys.version_info >= (3,):
     requires += [
