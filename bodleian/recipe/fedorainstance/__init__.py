@@ -2,10 +2,7 @@ import logging
 import os
 import zipfile
 import zc.buildout
-from genshi.template import Context
-from genshi.template import NewTextTemplate
-from genshi.template.base import TemplateSyntaxError
-from genshi.template.eval import UndefinedError
+import re
 
 
 from hexagonit.recipe.download import Recipe as downloadRecipe
@@ -18,6 +15,7 @@ FIELD_FEDORA_VERSION = 'version'
 FIELD_UNPACK_WAR_FILE = 'unpack-war-file'
 FIELD_DESTINATION = 'destination'
 FIELD_URL = 'url'
+FIELD_DOWNLOAD_ONLY = 'download-only'
 
 # internal constants
 DEFAULT_JAVA_COMMAND = '/usr/bin/java'
@@ -33,11 +31,16 @@ FEDORA4 = '4'
 MESSAGE_MISSING_VERSION = "No version specified"
 MESSAGE_MISSING_TOMCAT_HOME = "No tomcat app directory specified"
 MESSAGE_NOT_SUPPORTED_VERSION = "Specified version %s is not supported"
+MESSAGE_SINGLE_WORD = "A single word is expected"
 
 PACKAGES = {
     FEDORA4: "https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-4.2.0/fcrepo-webapp-4.2.0.war",
     FEDORA3: "http://downloads.sourceforge.net/project/fedora-commons/fedora/3.7.0/fcrepo-installer-3.7.0.jar?r=&ts=1424278682&use_mirror=waia"
 }
+
+def is_single_word(word):
+    return re.match(r'\A[\w-]+\Z', word)
+
 
 class Fedora4Worker:
     """
@@ -49,17 +52,25 @@ class Fedora4Worker:
         self.options = options
         self.logger = logger
 
-        options.setdefault(FIELD_DESTINATION,
-                           os.path.join(options[FIELD_TOMCAT_HOME],
-                                        DEFAULT_TOMCAT_WEBAPPS_FOLDER_NAME,
-                                        options[FIELD_FEDORA_URL_SUFFIX]))
+        download_options = {
+            FIELD_DESTINATION: os.path.join(options[FIELD_TOMCAT_HOME],
+                                            DEFAULT_TOMCAT_WEBAPPS_FOLDER_NAME,
+                                            options[FIELD_FEDORA_URL_SUFFIX])
+        }
         if self.options.get(FIELD_URL, None) is None:
-            self.options[FIELD_URL] = PACKAGES[options[FIELD_FEDORA_VERSION]]
-        self.download = downloadRecipe(buildout, name, options)
+            download_options[FIELD_URL] = PACKAGES[options[FIELD_FEDORA_VERSION]]
+        else:
+            download_options[FIELD_URL] = self.options.get(FIELD_URL)
+    
+        if self.options.get(FIELD_UNPACK_WAR_FILE, None) != 'true':
+            download_options['download-only'] = 'true'
+
+        self.download = downloadRecipe(buildout, name, download_options)
 
     def work(self):
         output = self.download.install()
         return [output]
+
 
 class Fedora3Worker:
     """
@@ -121,7 +132,11 @@ WORKER = {
     FEDORA3: Fedora3Worker
 }
 
+
 class FedoraRecipe:
+    """
+    The entry class for buildout
+    """
     def __init__(self, buildout, name, options):
         self.buildout = buildout
         self.name = name
@@ -137,10 +152,19 @@ class FedoraRecipe:
             self.logger.error(MESSAGE_MISSING_TOMCAT_HOME)
             raise zc.buildout.UserError(MESSAGE_MISSING_TOMCAT_HOME)
 
+        if FIELD_FEDORA_URL_SUFFIX not in options:
+            self.options[FIELD_FEDORA_URL_SUFFIX] = 'fedora'
+        else:
+            if not is_single_word(self.options[FIELD_FEDORA_URL_SUFFIX]):
+                self.logger.error(MESSAGE_SINGLE_WORD)
+                raise zc.buildout.UserError(MESSAGE_SINGLE_WORD)
+
         if options[FIELD_FEDORA_VERSION] not in PACKAGES:
             message = MESSAGE_NOT_SUPPORTED_VERSION % options[FIELD_FEDORA_VERSION]
             self.logger.error(message)
             raise zc.buildout.UserError(message)
+        if options.get(FIELD_UNPACK_WAR_FILE, None) is None:
+            options[FIELD_UNPACK_WAR_FILE] = 'true'
 
         # choose worker class
         worker_class = WORKER[options[FIELD_FEDORA_VERSION]]
