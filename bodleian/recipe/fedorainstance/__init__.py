@@ -53,8 +53,8 @@ class Fedora4Worker:
                            os.path.join(options[FIELD_TOMCAT_HOME],
                                         DEFAULT_TOMCAT_WEBAPPS_FOLDER_NAME,
                                         options[FIELD_FEDORA_URL_SUFFIX]))
-
-        self.options[FIELD_URL] = PACKAGES[options[FIELD_FEDORA_VERSION]]
+        if self.options.get(FIELD_URL, None) is None:
+            self.options[FIELD_URL] = PACKAGES[options[FIELD_FEDORA_VERSION]]
         self.download = downloadRecipe(buildout, name, options)
 
     def work(self):
@@ -79,38 +79,18 @@ class Fedora3Worker:
         options.setdefault(FIELD_DESTINATION, destination) 
 
         download_options = {
-            FIELD_URL: PACKAGES[options[FIELD_FEDORA_VERSION]],
             'download-only': 'true',
             FIELD_DESTINATION: DEFAULT_TMP_DIR
         }
+        if self.options.get(FIELD_URL, None) is None:
+            download_options[FIELD_URL] = PACKAGES[options[FIELD_FEDORA_VERSION]]
+
         self.download = downloadRecipe(buildout, name, download_options)
-
-    def _generate_from_template(self, **kwargs):
-        output_file = kwargs['output_file']
-        source = kwargs['source']
-        with open(source, 'r') as template:
-            template = NewTextTemplate(template)
-
-        context = Context(buildout=self.buildout[BUILDOUT],
-                          options=self.buildout[self.name],
-                          additional=kwargs)
-        try:
-            output = template.generate(context).render()
-        except (TemplateSyntaxError, UndefinedError) as e:
-            raise zc.buildout.UserError(
-                'Error in template {0:s}:\n{1:s}'.format(output_file, e.msg))
-
-        with open(output_file, 'wb') as outfile:
-            outfile.write(output.encode('utf8'))
-
-        self.logger.info('Generated file %r.', output_file)
 
     def work(self):
         output = self.download.install()
-        self._generate_from_template(
-            output_file=self.tmp_install_properties,
-            source=self.install_properties,
-        )
+        with open(self.tmp_install_properties, 'w') as f:
+            f.write(self.options['install-properties'])
         command = '%s -jar %s %s' % (DEFAULT_JAVA_COMMAND,
                                      output[0],
                                      self.tmp_install_properties)
