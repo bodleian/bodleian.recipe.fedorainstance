@@ -119,10 +119,6 @@ class Fedora3Worker:
                 zip_file.extractall(tomcat_webapp)
 
     @property
-    def install_properties(self):
-        return os.path.join(os.path.dirname(__file__),
-                            DEFAULT_FEDORA3_INSTALL_PROPERTIES)
-    @property
     def tmp_install_properties(self):
         return os.path.join(DEFAULT_TMP_DIR,
                             DEFAULT_FEDORA3_INSTALL_PROPERTIES)
