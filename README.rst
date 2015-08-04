@@ -1,61 +1,42 @@
+bodleian.recipe.fedorainstance
+==========================================================
+
+bodleian.recipe.fedorainstance is a `Buildout <http://buildout.org/>`_ recipe to install a fedora webapp to your existing Tomcat container.
+
 Usage
-=======
+-----------
+You must mention the recipe in your build out section::
 
-For fedora 4
---------------------
+    [your-build-target]
+    recipe = bodleian.recipe.fedorainstance
 
-.. testcode::
-   :hide:
+Supported options
+++++++++++++++++++++++++++
 
-    >>> # test set up
-    >>> import mock
-    >>> import shutil
-    >>> import os
-    >>> file_path = os.getcwd()
-    >>> shutil.copy(os.path.join(file_path, 'tests', 'sample.zip'), '/tmp/test.zip')
-    >>> patcher = mock.patch('hexagonit.recipe.download.Download') 
-    >>> fake = patcher.start()
-    >>> def fake_call(url, md5sum=None, path=None):
-    ...     print "Downloading %s" % url
-    ...     return '/tmp/test.zip', True
-    >>> fake.return_value = fake_call
+the recipe supports the following options:
 
-Here is an example configuration::
+``version``
+    fedora version. Only 3 and 4 are valid inputs
 
-    >>> buildcfg = """
-    ... [buildout]
-    ... parts = fedorainstance
-    ... 
-    ... [fedorainstance]
-    ... recipe = bodleian.recipe.fedorainstance
-    ... version = 4
-    ... tomcat-home = /tmp/tomcat
-    ... fedora-url-suffix = fedora
-    ... """
-    >>> with open('buildout.cfg', 'w') as f:
-    ...     f.write(buildcfg)
+``tomcat-home`` 
+    tomcat installation directory.
+
+``fedora-url-suffix``
+    the url suffix that should lead to your fedora instance under tomcat. It should be only a single word.
+
+Optional options
+*********************
+
+``url``
+    the url to your fedora package. You may want to override the default download url.
+
+``unpack-war-file``
+    set 'false' will prevent the recipe to unpack war file to tomcat
 
 
-Here is what you see::
+Fedora 3 specific options
+******************************
 
-    >>> # you could have done it using commad line : buildout -c buildout.cfg
-    >>> from zc.buildout.buildout import main
-    >>> args = ['-c', 'buildout.cfg']
-    >>> main(args)
-    Creating directory '/home/ora/bodleian-recipie-fedorainstance/parts'.
-    Installing fedorainstance.
-    Downloading https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-4.2.0/fcrepo-webapp-4.2.0.war
-    fedorainstance: Extracting package to /tmp/tomcat/webapps/fedora
-
-.. testcode::
-   :hide:
-
-    >>> # test verification
-    >>> import glob
-    >>> print glob.glob("/tmp/tomcat/webapps/fedora/*")
-    ['/tmp/tomcat/webapps/fedora/you_have_tested_it']
-    >>> shutil.rmtree("/tmp/tomcat")
-    >>> os.unlink("buildout.cfg")
-    >>> os.unlink(".installed.cfg")
-    >>> patcher.stop()
+``install-properties``
+    a key-value dictionary that you will need to supply to call **java -jar fcrepo-installer-3.x.jar** from command line.
 

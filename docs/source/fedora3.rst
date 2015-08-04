@@ -1,5 +1,5 @@
-For fedora 3
---------------------
+Fedora 3 configuration
+------------------------
 
 .. testcode::
    :hide:

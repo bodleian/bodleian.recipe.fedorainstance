@@ -8,8 +8,23 @@ Welcome to bodleian.recipe.fedorainstance's documentation!
 
 bodleian.recipe.fedorainstance is a `Buildout <http://buildout.org/>`_ recipe to install a fedora webapp to your existing Tomcat container.
 
+Examples
+-------------------
+
+.. toctree:: 
+   :maxdepth: 2
+
+   fedora3
+   fedora4
+
+
 Usage
 -----------
+
+You must mention the recipe in your build out section::
+
+    [your-build-target]
+    recipe = bodleian.recipe.fedorainstance
 
 Supported options
 ++++++++++++++++++++++++++
@@ -40,6 +55,7 @@ Fedora 3 specific options
 
 ``install-properties``
     a key-value dictionary that you will need to supply to call **java -jar fcrepo-installer-3.x.jar** from command line.
+
 
 Indices and tables
 ==================
