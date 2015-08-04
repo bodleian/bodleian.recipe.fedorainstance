@@ -64,18 +64,13 @@ Here is a sample configuration file::
     ...     install.type=custom
     ...     servlet.engine=existingTomcat
     ...     apim.ssl.required=false
-    ...     fedora.admin.pass=b89mPuLp
+    ...     fedora.admin.pass=xyz
     ...     apia.ssl.required=false
     ... 
     ... [example]
-    ... externalIP =  10.0.2.15
     ... servername = localhost
     ... fedora = localhost
-    ... solr = localhost
-    ... supervisor = localhost
     ... mysql = localhost
-    ... apache = localhost
-    ... supervisor = 9003
     ... tomcat6 = 8080
     ... fedora = 8080
     ... mysql = 8080
