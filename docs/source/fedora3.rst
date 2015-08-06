@@ -56,7 +56,7 @@ Here is a sample configuration file::
     ...     fedora.serverHost=${example:fedora}
     ...     database=mysql
     ...     database.driver=included
-    ...     fedora.serverContext=fedora
+    ...     fedora.serverContext=${fedora3instance:fedora-url-suffix}
     ...     llstore.type=legacy-fs
     ...     tomcat.home=${fedora3instance:tomcat-home}
     ...     fedora.home=${buildout:directory}/parts/fedora
