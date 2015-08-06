@@ -43,7 +43,9 @@ Fedora 3 specific options
 ******************************
 
 ``install-properties``
-    a key-value dictionary that you will need to supply to call **java -jar fcrepo-installer-3.x.jar** from command line. An example is::
+    a key-value dictionary that you will need to supply to call **java -jar fcrepo-installer-3.x.jar** from command line. 
+
+An example is::
 
     [your-build-target]
     recipe = bodleian.recipe.fedorainstance
