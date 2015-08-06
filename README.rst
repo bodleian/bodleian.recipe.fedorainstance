@@ -33,6 +33,8 @@ Optional options
 ``unpack-war-file``
     set 'false' will prevent the recipe to unpack war file to tomcat
 
+``java-bin``
+    override '/usr/bin/java' if your java is found somewhere else
 
 Fedora 3 specific options
 ******************************
