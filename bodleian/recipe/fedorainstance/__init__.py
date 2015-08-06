@@ -3,8 +3,9 @@ import re
 import logging
 import zipfile
 import tempfile
-import zc.buildout
 import ConfigParser
+
+import zc.buildout
 from hexagonit.recipe.download import Recipe as downloadRecipe
 
 # buildout options
@@ -98,7 +99,7 @@ class Fedora4Worker(FedoraWorker):
             download_options[FIELD_URL] = self.options.get(FIELD_URL)
 
         if self.options.get(FIELD_UNPACK_WAR_FILE, None) != 'true':
-            download_options['download-only'] = 'true'
+            download_options[FIELD_DOWNLOAD_ONLY] = 'true'
 
         return download_options
 
@@ -133,7 +134,7 @@ class Fedora3Worker(FedoraWorker):
         self.options.setdefault(FIELD_DESTINATION, destination)
 
         download_options = {
-            'download-only': 'true',
+            FIELD_DOWNLOAD_ONLY: 'true',
             FIELD_DESTINATION: tempfile.gettempdir()
         }
         if self.options.get(FIELD_URL, None) is None:
@@ -191,6 +192,11 @@ class FedoraWorkerFactory:
     """
     @staticmethod
     def get_worker(version):
+        """
+        Find a worker for this version
+
+        the major version is selected for find a worker.
+        """
         if version is None:
             return None
         prime_version = version[0]
@@ -239,6 +245,16 @@ class FedoraRecipe:
         self.worker = worker_class(buildout, name, options,
                                    self.logger, self.config)
 
+    def install(self):
+        """
+        Delegate the job to fedora worker
+        """
+        self.worker.work()
+        return self.options.created()
+
+    def update(self):
+        return self.options.created()
+
     def _raise_user_error_exception(self, message):
         self.logger.error(message)
         raise zc.buildout.UserError(message)
@@ -249,9 +265,3 @@ class FedoraRecipe:
         self.logger.error(message)
         raise zc.buildout.UserError(message)
 
-    def install(self):
-        self.worker.work()
-        return self.options.created()
-
-    def update(self):
-        return self.options.created()
