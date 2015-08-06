@@ -1,3 +1,4 @@
+from mock import patch
 from bodleian.recipe.fedorainstance import FedoraRecipe
 from bodleian.recipe.fedorainstance import (
     FIELD_FEDORA_VERSION,
@@ -46,3 +47,12 @@ def test_fedora_4_key():
     })
 
 
+@raises(UserError)
+@patch('bodleian.recipe.fedorainstance.WORKER', {})
+def test_if_no_worker_for_a_version():
+    FedoraRecipe({"buildout": {"parts-directory": "/tmp"}}, "test", {
+        FIELD_FEDORA_VERSION: "4",
+        FIELD_TOMCAT_HOME: "test",
+        FIELD_URL: "http",
+        FIELD_UNPACK_WAR_FILE: "false"
+    })

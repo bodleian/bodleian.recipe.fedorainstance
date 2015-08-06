@@ -15,6 +15,7 @@ FIELD_FEDORA_URL_SUFFIX = 'fedora-url-suffix'
 FIELD_UNPACK_WAR_FILE = 'unpack-war-file'
 FIELD_INSTALL_PROPERTIES = 'install-properties'
 FIELD_URL = 'url'
+FIELD_JAVA_BIN = 'java-bin'
 
 # internal download recipe options
 FIELD_DESTINATION = 'destination'
@@ -113,6 +114,13 @@ class Fedora3Worker(FedoraWorker):
     """
     Install Fedora 3
     """
+    def __init__(self, buildout, name, options, logger, config):
+        FedoraWorker.__init__(self,
+                              buildout, name, options,
+                              logger, config)
+        if options.get(FIELD_JAVA_BIN, None) is None:
+            options[FIELD_JAVA_BIN] = DEFAULT_JAVA_COMMAND
+
     def get_download_options(self):
         """
         Instruct download recipe to get the fedora installer
@@ -143,7 +151,7 @@ class Fedora3Worker(FedoraWorker):
         with open(self.tmp_install_properties, 'w') as f:
             f.write(self.options[FIELD_INSTALL_PROPERTIES])
         command = '%s -jar %s %s' % (
-            DEFAULT_JAVA_COMMAND,
+            self.options[FIELD_JAVA_BIN],
             output[0],
             self.tmp_install_properties)
         os.system(command)
