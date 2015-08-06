@@ -11,27 +11,23 @@ def read(name):
     return open(os.path.join(os.path.dirname(__file__), name)).read()
 
 
-requires = ['setuptools', 'hexagonit.recipe.download', 'jinja2']
+requires = ['setuptools', 'hexagonit.recipe.download']
 
 if sys.version_info >= (3,):
     requires += [
-        'Genshi>=0.7.0',
         'zc.buildout>=2.0.0a1',
         ]
 else:
     requires += [
-        'Genshi',
         'zc.buildout',
         ]
 
 test_requires = requires + [
-    'zope.exceptions',
-    'zope.interface',
-    'zope.testing',
+    'nose',
+    'nose-cov',
+    'renose',
+    'mock'    
 ]
-
-if sys.version_info <= (2, 7):
-    test_requires.append('unittest2')
 
 long_description = '\n'.join([
     read('README.rst')
@@ -51,7 +47,7 @@ setup(
     ],
     keywords='',
     author='C. W.',
-    author_email='wangc_2011@hotmail.com',
+    author_email='wangc_2011(at)hotmail.com',
     url='http://pypi.python.org/pypi/bodleian.recipe.fedorainstance',
     license='MIT',
     packages=find_packages(exclude=['ez_setup']),

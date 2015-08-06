@@ -61,3 +61,9 @@ An example is::
         ...
         fedora.serverContext=${your-build-target:fedora-url-suffix}
 
+License
+---------
+
+MIT license
+
+See LICENSE file for more details

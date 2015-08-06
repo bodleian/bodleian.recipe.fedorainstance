@@ -84,3 +84,10 @@ An example is::
 
    For feodra 3, please set **fedora.serverContext=${your-build-target:fedora-url-suffix}** in install-properties.
    Otherwise, this recipe cannot find the fedora war file for deploying it to tomcat
+
+License
+---------
+
+MIT license
+
+See LICENSE file for more details

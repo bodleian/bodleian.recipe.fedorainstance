@@ -1,3 +1,14 @@
+# -*- coding: utf-8 -*-
+"""
+    bodleian.recipe.fedorainstance
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    This module implements the fedora recipe
+
+    :copyright: (c) 2015 by the University of Oxford
+    :license: MIT, see LICENSE for more details
+"""
+
 import os
 import re
 import logging
