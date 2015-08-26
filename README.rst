@@ -16,7 +16,7 @@ Supported options
 the recipe supports the following options:
 
 ``version``
-    fedora version. Valid values are: 4, 3, 3.8, 3.7. And version 3.7 is a default for version = 3
+    fedora version. Valid values are: 4, 3, 3.8, 3.7, 2.2.4 And version 3.7 is a default for ``version`` = 3
     Default configurations can be found in *bodleian/recipe/fedorainstance/recipe_config.ini*
 
 ``tomcat-home`` 
@@ -39,7 +39,7 @@ Optional options
 ``java-bin``
     override '/usr/bin/java' if your java is found somewhere else
 
-Fedora 3 specific options
+Fedora 2 and 3 specific options
 ******************************
 
 ``install-properties``
@@ -60,6 +60,11 @@ An example is::
         apia.auth.required=false
         ...
         fedora.serverContext=${your-build-target:fedora-url-suffix}
+
+.. note::
+
+   For feodra 3, please set **fedora.serverContext=${your-build-target:fedora-url-suffix}** in install-properties.
+   Otherwise, this recipe cannot find the fedora war file for deploying it to tomcat
 
 Development
 -------------------

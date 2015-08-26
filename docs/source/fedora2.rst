@@ -1,4 +1,4 @@
-Fedora 3 configuration
+Fedora 2 configuration
 ------------------------
 
 .. testcode::
@@ -13,7 +13,7 @@ Fedora 3 configuration
     >>> os.makedirs(os.path.join(file_path, 'parts', 'fedora3instance', 'install'))
     >>> shutil.copy(os.path.join(file_path, 'tests', 'sample.zip'), os.path.join(file_path, 'parts', 'fedora3instance', 'install', 'fedora.war'))
     >>> shutil.copy(os.path.join(file_path, 'tests', 'sample.zip'), '/tmp/test.zip')
-    >>> shutil.copy(os.path.join(file_path, 'tests', 'sample.zip'), '/tmp/tomcat/webapps/fedora3.war')
+    >>> shutil.copy(os.path.join(file_path, 'tests', 'sample.zip'), '/tmp/tomcat/webapps/fedora.war')
     >>> patcher = mock.patch('hexagonit.recipe.download.Download') 
     >>> fake = patcher.start()
     >>> def fake_call(url, md5sum=None, path=None):
@@ -27,13 +27,13 @@ Here is a sample configuration file::
 
     >>> buildcfg = """
     ... [buildout]
-    ... parts = fedora3instance
+    ... parts = fedora2instance
     ... 
-    ... [fedora3instance]
+    ... [fedora2instance]
     ... recipe = bodleian.recipe.fedorainstance
-    ... version = 3
+    ... version = 2
     ... tomcat-home = /tmp/tomcat
-    ... fedora-url-suffix = fedora3
+    ... fedora-url-suffix = fedora2
     ... unpack-war-file = true
     ... install-properties = 
     ...     keystore.file=included
@@ -44,28 +44,28 @@ Here is a sample configuration file::
     ...     upstream.auth.enabled=false
     ...     tomcat.ssl.port=8443
     ...     ssl.available=true
-    ...     database.jdbcURL=jdbc\:mysql\://${example:mysql}/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true
-    ...     database.password=${example:fedoraAdmin}
+    ...     database.jdbcURL=jdbc\:mysql\://localhost/fedora22?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true
+    ...     database.password=fedoraAdmin
     ...     database.mysql.driver=included
-    ...     database.username=${example:fedoraAdmin}
+    ...     database.username=fedoraAdmin
     ...     fesl.authz.enabled=false
     ...     tomcat.shutdown.port=8005
     ...     deploy.local.services=false
     ...     xacml.enabled=true
     ...     database.mysql.jdbcDriverClass=com.mysql.jdbc.Driver
-    ...     tomcat.http.port=${example:tomcat6}
-    ...     fedora.serverHost=${example:fedora}
+    ...     tomcat.http.port=8080
+    ...     fedora.serverHost=localhost
     ...     database=mysql
     ...     database.driver=included
-    ...     fedora.serverContext=${fedora3instance:fedora-url-suffix}
+    ...     fedora.serverContext=fedora2
     ...     llstore.type=legacy-fs
-    ...     tomcat.home=${fedora3instance:tomcat-home}
-    ...     fedora.home=${buildout:directory}/parts/fedora
-    ...     database.mysql.jdbcURL=jdbc\:mysql\://${example:mysql}/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true
+    ...     tomcat.home=/home/ora/sites/ora/parts/tomcat6
+    ...     fedora.home=/home/ora/sites/ora/parts/fedora2
+    ...     database.mysql.jdbcURL=jdbc\:mysql\://localhost/fedora22?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true
     ...     install.type=custom
     ...     servlet.engine=existingTomcat
     ...     apim.ssl.required=false
-    ...     fedora.admin.pass=xyz
+    ...     fedora.admin.pass=fedoraAdmin
     ...     apia.ssl.required=false
     ... 
     ... [example]
@@ -86,10 +86,11 @@ Here is what you see::
     >>> from zc.buildout.buildout import main
     >>> args = ['-c', 'buildout.cfg']
     >>> main(args)
-    Installing fedora3instance.
-    Downloading http://downloads.sourceforge.net/project/fedora-commons/fedora/3.7.0/fcrepo-installer-3.7.0.jar?r=&ts=1424278682&use_mirror=waia
-    fedora3instance: Unpack war file /tmp/tomcat/webapps/fedora3.war to /tmp/tomcat/webapps/fedora3
-    fedora3instance: removing /tmp/tomcat/webapps/fedora3.war
+    Installing fedora2instance.
+    Downloading http://downloads.sourceforge.net/project/fedora-commons/fedora/2.2.4/fedora-2.2.4-installer.jar?ts=1440584405&use_mirror=waia
+    fedora2instance: renaming /tmp/tomcat/webapps/fedora.war to /tmp/tomcat/webapps/fedora2.war
+    fedora2instance: Unpack war file /tmp/tomcat/webapps/fedora2.war to /tmp/tomcat/webapps/fedora2
+    fedora2instance: removing /tmp/tomcat/webapps/fedora2.war
 
 
 .. testcode::
@@ -97,8 +98,8 @@ Here is what you see::
 
     >>> # test verification
     >>> import glob
-    >>> print glob.glob("/tmp/tomcat/webapps/fedora3/*")
-    ['/tmp/tomcat/webapps/fedora3/you_have_tested_it']
+    >>> print glob.glob("/tmp/tomcat/webapps/fedora2/*")
+    ['/tmp/tomcat/webapps/fedora2/you_have_tested_it']
     >>> shutil.rmtree("/tmp/tomcat")
     >>> shutil.rmtree("./parts")
     >>> os.unlink("buildout.cfg")

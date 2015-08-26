@@ -3,11 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to bodleian.recipe.fedorainstance's documentation!
-==========================================================
-
-bodleian.recipe.fedorainstance is a `Buildout <http://buildout.org/>`_ recipe to install an unpacked 
-fedora webapp to your existing Tomcat container.
+.. include:: ../../README.rst
 
 Examples
 -------------------
@@ -15,79 +11,6 @@ Examples
 .. toctree:: 
    :maxdepth: 2
 
+   fedora2
    fedora3
    fedora4
-
-
-Usage
------------
-
-You must mention the recipe in your build out section::
-
-    [your-build-target]
-    recipe = bodleian.recipe.fedorainstance
-
-Supported options
-++++++++++++++++++++++++++
-
-the recipe supports the following options:
-
-``version``
-    fedora version. Valid values are: 4, 3, 3.8, 3.7. And version 3.7 is a default for version = 3. 
-    Default configurations can be found in *bodleian/recipe/fedorainstance/recipe_config.ini*
-
-``tomcat-home`` 
-    tomcat installation directory.
-
-``fedora-url-suffix``
-    the url suffix that should lead to your fedora instance under tomcat. It should be only a single word.
-
-Optional options
-*********************
-
-``url``
-    the url to your fedora package. You may want to override the default download url 
-    in *bodleian/recipe/fedorainstance/recipe_config.ini*. 
-
-``unpack-war-file``
-    set 'false' will prevent the recipe from unpacking the fedora war file to 
-    tomcat webapps. In other words, it instructs this recipe to copy the war
-    to tomcat webapps directory only.
-
-``java-bin``
-    override '/usr/bin/java' if your java is found somewhere else
-
-
-Fedora 3 specific options
-******************************
-
-``install-properties``
-    a key-value dictionary that you will need to supply to call **java -jar fcrepo-installer-3.x.jar** from command line.
-
-An example is::
-
-    [your-build-target]
-    recipe = bodleian.recipe.fedorainstance
-    version = 3
-    tomcat-home = /tmp/tomcat
-    fedora-url-suffix = fedora
-    unpack-war-file = true
-    install-properties = 
-        keystore.file=included
-        ri.enabled=true
-        messaging.enabled=false
-        apia.auth.required=false
-        ...
-        fedora.serverContext=${your-build-target:fedora-url-suffix}
-
-.. note::
-
-   For feodra 3, please set **fedora.serverContext=${your-build-target:fedora-url-suffix}** in install-properties.
-   Otherwise, this recipe cannot find the fedora war file for deploying it to tomcat
-
-License
----------
-
-MIT license
-
-See LICENSE file for more details
