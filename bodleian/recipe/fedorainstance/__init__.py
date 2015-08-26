@@ -218,47 +218,12 @@ class Fedora2Worker(Fedora3Worker):
     as the folder name unpacked under tomcat webapps
     folder
     """
-    def work(self):
-        Fedora3Worker.work(self)
-        # just in case user do not want to unpack it
-        # hence we still need to rename the war file
-        # so that multiple fedora apps can co-exist
-        if self.options.get(FIELD_UNPACK_WAR_FILE, '') != 'true':
-            self._respect_server_context()
-
-    def _unpack_war_file(self):
-        self._respect_server_context()
-        Fedora3Worker._unpack_war_file(self)
-
-    def _respect_server_context(self):
-        """
-        Rename pre-installed war file
-
-        by default, installer.jar will copy 'fedora.war' to
-        tomcat web apps. it should obey our suffix in case
-        multiple fedora instance are to be installed
-        """
-        default_fedora2_war_file_name = (
-            "%s.war" % DEFAULT_FEDORA_NAME
-        )
-        should_be_war_file_name = (
-            "%s.war" % self.options[FIELD_FEDORA_URL_SUFFIX])
-        tomcat_webapp = os.path.join(
-            self.options[FIELD_TOMCAT_HOME],
-            DEFAULT_TOMCAT_WEBAPPS_FOLDER_NAME)
-        self._rename_file_in_dir(
-            tomcat_webapp,
-            default_fedora2_war_file_name,
-            should_be_war_file_name
-        )
-
-    def _rename_file_in_dir(self, folder, from_file, to_file):
-        filea = os.path.join(folder, from_file)
-        fileb = os.path.join(folder, to_file)
-        if from_file != to_file:
-            self.logger.info("renaming %s to %s" % (filea, fileb))
-            os.rename(filea, fileb)
-
+    def __init__(self, buildout, name, options, logger, config):
+        Fedora3Worker.__init__(self, buildout, name, options, logger, config)
+        if self.options[FIELD_FEDORA_URL_SUFFIX] != DEFAULT_FEDORA_NAME:
+            self.logger.info(
+                "Fedora 2 does not support %s! using fedora" % FIELD_FEDORA_URL_SUFFIX)
+            self.options[FIELD_FEDORA_URL_SUFFIX] = DEFAULT_FEDORA_NAME
 
 # update this worker dictionary to get new ones
 WORKER = {

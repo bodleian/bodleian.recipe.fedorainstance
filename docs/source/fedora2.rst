@@ -33,7 +33,6 @@ Here is a sample configuration file::
     ... recipe = bodleian.recipe.fedorainstance
     ... version = 2
     ... tomcat-home = /tmp/tomcat
-    ... fedora-url-suffix = fedora2
     ... unpack-war-file = true
     ... install-properties = 
     ...     keystore.file=included
@@ -88,9 +87,8 @@ Here is what you see::
     >>> main(args)
     Installing fedora2instance.
     Downloading http://downloads.sourceforge.net/project/fedora-commons/fedora/2.2.4/fedora-2.2.4-installer.jar?ts=1440584405&use_mirror=waia
-    fedora2instance: renaming /tmp/tomcat/webapps/fedora.war to /tmp/tomcat/webapps/fedora2.war
-    fedora2instance: Unpack war file /tmp/tomcat/webapps/fedora2.war to /tmp/tomcat/webapps/fedora2
-    fedora2instance: removing /tmp/tomcat/webapps/fedora2.war
+    fedora2instance: Unpack war file /tmp/tomcat/webapps/fedora.war to /tmp/tomcat/webapps/fedora
+    fedora2instance: removing /tmp/tomcat/webapps/fedora.war
 
 
 .. testcode::
@@ -98,8 +96,8 @@ Here is what you see::
 
     >>> # test verification
     >>> import glob
-    >>> print glob.glob("/tmp/tomcat/webapps/fedora2/*")
-    ['/tmp/tomcat/webapps/fedora2/you_have_tested_it']
+    >>> print glob.glob("/tmp/tomcat/webapps/fedora/*")
+    ['/tmp/tomcat/webapps/fedora/you_have_tested_it']
     >>> shutil.rmtree("/tmp/tomcat")
     >>> shutil.rmtree("./parts")
     >>> os.unlink("buildout.cfg")

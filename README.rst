@@ -1,7 +1,8 @@
 bodleian.recipe.fedorainstance
 ==========================================================
 
-bodleian.recipe.fedorainstance is a `Buildout <http://buildout.org/>`_ recipe to install an unpacked fedora webapp to your existing Tomcat container.
+bodleian.recipe.fedorainstance is a `Buildout <http://buildout.org/>`_ recipe 
+to install an unpacked fedora webapp to your existing Tomcat container.
 
 Usage
 -----------
@@ -16,20 +17,24 @@ Supported options
 the recipe supports the following options:
 
 ``version``
-    fedora version. Valid values are: 4, 3, 3.8, 3.7, 2.2.4 And version 3.7 is a default for ``version`` = 3
-    Default configurations can be found in *bodleian/recipe/fedorainstance/recipe_config.ini*
+    fedora version. Valid values are: 4, 3, 3.8, 3.7, 2.2.4 And version 3.7 is 
+    a default for ``version`` = 3.  Default configurations can be found in 
+    *bodleian/recipe/fedorainstance/recipe_config.ini*
 
 ``tomcat-home`` 
     tomcat installation directory.
 
 ``fedora-url-suffix``
-    the url suffix that should lead to your fedora instance under tomcat. It should be only a single word.
+    the url suffix that should lead to your fedora instance under tomcat. It 
+    should be only a single word. This is not applicable when ``version`` is set
+    to 2.
 
 Optional options
 *********************
 
 ``url``
-    the url to your fedora package. You may want to override the default download url in *bodleian/recipe/fedorainstance/recipe_config.ini*.
+    the url to your fedora package. You may want to override the default 
+    download url in *bodleian/recipe/fedorainstance/recipe_config.ini*.
 
 ``unpack-war-file``
     set 'false' will prevent the recipe from unpacking the fedora war file to 
@@ -43,7 +48,8 @@ Fedora 2 and 3 specific options
 ******************************
 
 ``install-properties``
-    a key-value dictionary that you will need to supply to call **java -jar fcrepo-installer-3.x.jar** from command line. 
+    a key-value dictionary that you will need to supply to call 
+    **java -jar fcrepo-installer-3.x.jar** from command line. 
 
 An example is::
 
@@ -63,13 +69,15 @@ An example is::
 
 .. note::
 
-   For feodra 3, please set **fedora.serverContext=${your-build-target:fedora-url-suffix}** in install-properties.
+   For feodra 3, please set
+    **fedora.serverContext=${your-build-target:fedora-url-suffix}** in install-properties.
    Otherwise, this recipe cannot find the fedora war file for deploying it to tomcat
 
 Development
 -------------------
 
-Please fork it to your repo and then submit merge requests. Here is how you do tests::
+Please fork it to your repo and then submit merge requests. 
+Here is how you do tests::
 
     $ python setup.py install
     $ pip install -r tests/requirements.txt
