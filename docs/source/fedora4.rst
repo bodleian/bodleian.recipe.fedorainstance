@@ -39,7 +39,7 @@ Here is what you see::
     >>> from zc.buildout.buildout import main
     >>> args = ['-c', 'buildout.cfg']
     >>> main(args)
-    Creating directory '/home/ora/bodleian-recipie-fedorainstance/parts'.
+    Creating directory '/home/ora/bodleian.recipe.fedorainstance/parts'.
     Installing fedorainstance.
     Downloading https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-4.2.0/fcrepo-webapp-4.2.0.war
     fedorainstance: Extracting package to /tmp/tomcat/webapps/fedora

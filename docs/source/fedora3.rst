@@ -87,7 +87,7 @@ Here is what you see::
     >>> main(args)
     Installing fedora3instance.
     Downloading http://downloads.sourceforge.net/project/fedora-commons/fedora/3.7.0/fcrepo-installer-3.7.0.jar?r=&ts=1424278682&use_mirror=waia
-    fedora3instance: Unpack war file /home/ora/bodleian-recipie-fedorainstance/parts/fedora3instance/install/fedora.war to /tmp/tomcat/webapps/fedora
+    fedora3instance: Unpack war file /home/ora/bodleian.recipe.fedorainstance/parts/fedora3instance/install/fedora.war to /tmp/tomcat/webapps/fedora
 
 
 .. testcode::

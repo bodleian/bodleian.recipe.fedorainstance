@@ -61,6 +61,15 @@ An example is::
         ...
         fedora.serverContext=${your-build-target:fedora-url-suffix}
 
+Development
+-------------------
+
+Please fork it to your repo and then submit merge requests. Here is how you do tests:
+
+    $ python setup.py install
+    $ pip install -r tests/requirements.txt
+    $ make
+
 License
 ---------
 
