@@ -64,7 +64,7 @@ An example is::
 Development
 -------------------
 
-Please fork it to your repo and then submit merge requests. Here is how you do tests:
+Please fork it to your repo and then submit merge requests. Here is how you do tests::
 
     $ python setup.py install
     $ pip install -r tests/requirements.txt
