@@ -39,6 +39,7 @@ DEFAULT_TOMCAT_WEBAPPS_FOLDER_NAME = 'webapps'
 DEFAULT_FEDORA3_INSTALL_PROPERTIES = 'install.properties'
 DEFAULT_FEDORA3_WAR_FILE_FOLDER = 'install'
 DEFAULT_FEDORA_NAME = 'fedora'
+FEDORA2 = '2'
 FEDORA3 = '3'
 FEDORA4 = '4'
 
@@ -51,6 +52,7 @@ MESSAGE_MISSING_VERSION = "No version specified"
 MESSAGE_MISSING_TOMCAT_HOME = "No tomcat app directory specified"
 MESSAGE_NOT_SUPPORTED_VERSION = "Specified version %s is not supported"
 MESSAGE_SINGLE_WORD = "A single word is expected"
+MESSAGE_SUFFIX_IGNORED = "Fedora 2 does not support %s! using fedora"
 
 
 # utility function
@@ -153,6 +155,8 @@ class Fedora3Worker(FedoraWorker):
                 SECTION_PACKAGES,
                 self.options[FIELD_FEDORA_VERSION]
             )
+        else:
+            download_options[FIELD_URL] = self.options.get(FIELD_URL)
         return download_options
 
     def work(self):
@@ -168,21 +172,28 @@ class Fedora3Worker(FedoraWorker):
             self.tmp_install_properties)
         os.system(command)
         if self.options.get(FIELD_UNPACK_WAR_FILE, '') == 'true':
-            default_fedora_war_file_name = (
-                "%s.war" % self.options[FIELD_FEDORA_URL_SUFFIX])
-            fedora_war = os.path.join(
-                self.options[FIELD_DESTINATION],
-                DEFAULT_FEDORA3_WAR_FILE_FOLDER,
-                default_fedora_war_file_name)
-            tomcat_webapp = os.path.join(
-                self.options[FIELD_TOMCAT_HOME],
-                DEFAULT_TOMCAT_WEBAPPS_FOLDER_NAME,
-                self.options[FIELD_FEDORA_URL_SUFFIX])
-            self.logger.info('Unpack war file %s to %s',
-                             fedora_war,
-                             tomcat_webapp)
-            with zipfile.ZipFile(fedora_war) as zip_file:
-                zip_file.extractall(tomcat_webapp)
+            self._unpack_war_file()
+
+    def _unpack_war_file(self):
+        default_fedora_war_file_name = (
+            "%s.war" % self.options[FIELD_FEDORA_URL_SUFFIX])
+        tomcat_webapp = os.path.join(
+            self.options[FIELD_TOMCAT_HOME],
+            DEFAULT_TOMCAT_WEBAPPS_FOLDER_NAME)
+        fedora_war = os.path.join(
+            tomcat_webapp,
+            default_fedora_war_file_name
+        )
+        dest_tomcat_webapp = os.path.join(
+            tomcat_webapp,
+            self.options[FIELD_FEDORA_URL_SUFFIX])
+        self.logger.info('Unpack war file %s to %s',
+                         fedora_war,
+                         dest_tomcat_webapp)
+        with zipfile.ZipFile(fedora_war) as zip_file:
+            zip_file.extractall(dest_tomcat_webapp)
+        self.logger.info("removing %s" % fedora_war)
+        os.unlink(fedora_war)
 
     @property
     def tmp_install_properties(self):
@@ -190,10 +201,35 @@ class Fedora3Worker(FedoraWorker):
                             DEFAULT_FEDORA3_INSTALL_PROPERTIES)
 
 
+class Fedora2Worker(Fedora3Worker):
+    """
+    Install Fedora 2
+
+    In general, Fedora2Worker does the same
+    thing as Fedora3Worker because both version 2
+    and version 3 of fedora are installed in the same
+    way.
+
+    The difference is that version 2 installer does not
+    repect ```fedora.serverContext``` as version 3 one does.
+
+    What is server context? It is the url suffix when you
+    access fedora under tomcat. And it is the same name
+    as the folder name unpacked under tomcat webapps
+    folder
+    """
+    def __init__(self, buildout, name, options, logger, config):
+        Fedora3Worker.__init__(self, buildout, name, options, logger, config)
+        if self.options[FIELD_FEDORA_URL_SUFFIX] != DEFAULT_FEDORA_NAME:
+            self.logger.info(
+                MESSAGE_SUFFIX_IGNORED % FIELD_FEDORA_URL_SUFFIX)
+            self.options[FIELD_FEDORA_URL_SUFFIX] = DEFAULT_FEDORA_NAME
+
 # update this worker dictionary to get new ones
 WORKER = {
     FEDORA4: Fedora4Worker,
-    FEDORA3: Fedora3Worker
+    FEDORA3: Fedora3Worker,
+    FEDORA2: Fedora2Worker
 }
 
 
@@ -275,4 +311,3 @@ class FedoraRecipe:
             MESSAGE_NOT_SUPPORTED_VERSION % self.options[FIELD_FEDORA_VERSION])
         self.logger.error(message)
         raise zc.buildout.UserError(message)
-
