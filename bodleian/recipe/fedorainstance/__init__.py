@@ -52,6 +52,7 @@ MESSAGE_MISSING_VERSION = "No version specified"
 MESSAGE_MISSING_TOMCAT_HOME = "No tomcat app directory specified"
 MESSAGE_NOT_SUPPORTED_VERSION = "Specified version %s is not supported"
 MESSAGE_SINGLE_WORD = "A single word is expected"
+MESSAGE_SUFFIX_IGNORED = "Fedora 2 does not support %s! using fedora"
 
 
 # utility function
@@ -210,8 +211,7 @@ class Fedora2Worker(Fedora3Worker):
     way.
 
     The difference is that version 2 installer does not
-    repect ```fedora.serverContext``` as version 3 one does
-    so _respect_server_context is added.
+    repect ```fedora.serverContext``` as version 3 one does.
 
     What is server context? It is the url suffix when you
     access fedora under tomcat. And it is the same name
@@ -222,7 +222,7 @@ class Fedora2Worker(Fedora3Worker):
         Fedora3Worker.__init__(self, buildout, name, options, logger, config)
         if self.options[FIELD_FEDORA_URL_SUFFIX] != DEFAULT_FEDORA_NAME:
             self.logger.info(
-                "Fedora 2 does not support %s! using fedora" % FIELD_FEDORA_URL_SUFFIX)
+                MESSAGE_SUFFIX_IGNORED % FIELD_FEDORA_URL_SUFFIX)
             self.options[FIELD_FEDORA_URL_SUFFIX] = DEFAULT_FEDORA_NAME
 
 # update this worker dictionary to get new ones
