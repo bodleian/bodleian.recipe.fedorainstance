@@ -47,6 +47,13 @@ Optional options
 Fedora 2 and 3 specific options
 ******************************
 
+``overwrite-existing``
+   a signal to the reciepe to clear the destination directory with the
+   new content. The previous content is backed up in /tmp. Please
+   check your build log when you have put the stone on your toe, for
+   example, your fedora buldout got important data that you regretted
+   to use overwrite-existing==true.
+
 ``install-properties``
     a key-value dictionary that you will need to supply to call 
     **java -jar fcrepo-installer-3.x.jar** from command line. 

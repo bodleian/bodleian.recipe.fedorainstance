@@ -8,6 +8,7 @@ Fedora 3 configuration
     >>> import mock
     >>> import shutil
     >>> import os
+    >>> os.makedirs("parts/fedora3instance/test")
     >>> file_path = os.getcwd()
     >>> os.makedirs('/tmp/tomcat/webapps')
     >>> os.makedirs(os.path.join(file_path, 'parts', 'fedora3instance', 'install'))
@@ -35,6 +36,7 @@ Here is a sample configuration file::
     ... tomcat-home = /tmp/tomcat
     ... fedora-url-suffix = fedora3
     ... unpack-war-file = true
+    ... overwrite-existing = true
     ... install-properties = 
     ...     keystore.file=included
     ...     ri.enabled=true
@@ -85,9 +87,10 @@ Here is what you see::
     >>> # you could have done it using commad line : buildout -c buildout.cfg
     >>> from zc.buildout.buildout import main
     >>> args = ['-c', 'buildout.cfg']
-    >>> main(args)
+    >>> main(args) # doctest: +ELLIPSIS
     Installing fedora3instance.
     Downloading http://downloads.sourceforge.net/project/fedora-commons/fedora/3.7.0/fcrepo-installer-3.7.0.jar?r=&ts=1424278682&use_mirror=waia
+    fedora3instance: Backing up .../parts/fedora3instance to /tmp/...
     fedora3instance: Unpack war file /tmp/tomcat/webapps/fedora3.war to /tmp/tomcat/webapps/fedora3
     fedora3instance: removing /tmp/tomcat/webapps/fedora3.war
 
