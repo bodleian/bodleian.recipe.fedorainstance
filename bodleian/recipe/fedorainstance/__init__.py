@@ -11,6 +11,7 @@
 
 import os
 import re
+import shutil
 import logging
 import zipfile
 import tempfile
@@ -26,6 +27,7 @@ FIELD_TOMCAT_HOME = 'tomcat-home'
 FIELD_FEDORA_URL_SUFFIX = 'fedora-url-suffix'
 FIELD_UNPACK_WAR_FILE = 'unpack-war-file'
 FIELD_INSTALL_PROPERTIES = 'install-properties'
+FIELD_OVERWRITE_EXISTING = 'overwrite-existing'
 FIELD_URL = 'url'
 FIELD_JAVA_BIN = 'java-bin'
 
@@ -166,6 +168,16 @@ class Fedora3Worker(FedoraWorker):
         output = self.download.install()
         with open(self.tmp_install_properties, 'w') as f:
             f.write(self.options[FIELD_INSTALL_PROPERTIES])
+        destination = os.path.join(
+            self.buildout[BUILDOUT]['parts-directory'],
+            self.name)
+        if len(os.listdir(destination)) > 0:
+            if self.options.get(FIELD_OVERWRITE_EXISTING, 'false') == 'true':
+                tmp_dir = tempfile.mkdtemp()
+                shutil.move(destination, tmp_dir)
+                self.logger.info("Backing up %s to %s" % (destination,
+                                                          tmp_dir))
+                os.makedirs(destination)
         command = '%s -jar %s %s' % (
             self.options[FIELD_JAVA_BIN],
             output[0],
