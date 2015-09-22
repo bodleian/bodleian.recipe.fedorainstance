@@ -13,4 +13,5 @@ Examples
 
    fedora2
    fedora3
+   fedora3.8
    fedora4
