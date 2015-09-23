@@ -43,13 +43,11 @@ DEFAULT_FEDORA3_WAR_FILE_FOLDER = 'install'
 DEFAULT_FEDORA_NAME = 'fedora'
 FEDORA2 = '2'
 FEDORA3 = '3'
-FEDORA3_8 = '3.8'
 FEDORA4 = '4'
 
 # configurations
 DEFAULT_CONFIG_INI_FILE = 'recipe_config.ini'
 SECTION_PACKAGES = 'packages'
-SECTION_MISC = 'misc'
 
 # messages
 MESSAGE_MISSING_VERSION = "No version specified"
@@ -215,38 +213,6 @@ class Fedora3Worker(FedoraWorker):
                             DEFAULT_FEDORA3_INSTALL_PROPERTIES)
 
 
-class Fedora3dot8Worker(Fedora3Worker):
-    def work(self):
-        Fedora3Worker.work(self)
-        self._copy_additional_war_files()
-
-    def _copy_additional_war_files(self):
-        fedora_install_dir = os.path.join(
-            self.buildout[BUILDOUT]['parts-directory'],
-            self.name,
-            'install'
-        )
-        extra_war_files = self.config.get(
-            SECTION_MISC,
-            "extra_war_files_for_3.8"
-        )
-        tomcat_webapp = os.path.join(
-            self.options[FIELD_TOMCAT_HOME],
-            DEFAULT_TOMCAT_WEBAPPS_FOLDER_NAME)
-        for a_file in extra_war_files.split(" "):
-            copy_from_file = os.path.join(
-                fedora_install_dir,
-                a_file
-            )
-            copy_to_file = os.path.join(
-                tomcat_webapp,
-                a_file
-            )
-            self.logger.info("Copying additional file %s" % a_file)
-            shutil.copy(copy_from_file, copy_to_file)
-
-
-
 class Fedora2Worker(Fedora3Worker):
     """
     Install Fedora 2
@@ -275,7 +241,6 @@ class Fedora2Worker(Fedora3Worker):
 WORKER = {
     FEDORA4: Fedora4Worker,
     FEDORA3: Fedora3Worker,
-    FEDORA3_8: Fedora3dot8Worker,
     FEDORA2: Fedora2Worker
 }
 
