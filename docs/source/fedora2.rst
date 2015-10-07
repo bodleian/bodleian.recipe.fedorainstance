@@ -84,7 +84,8 @@ Here is what you see::
     >>> # you could have done it using commad line : buildout -c buildout.cfg
     >>> from zc.buildout.buildout import main
     >>> args = ['-c', 'buildout.cfg']
-    >>> main(args)
+    >>> main(args) # doctest: +ELLIPSIS
+    ...
     Installing fedora2instance.
     Downloading http://downloads.sourceforge.net/project/fedora-commons/fedora/2.2.4/fedora-2.2.4-installer.jar?ts=1440584405&use_mirror=waia
     fedora2instance: Unpack war file /tmp/tomcat/webapps/fedora.war to /tmp/tomcat/webapps/fedora

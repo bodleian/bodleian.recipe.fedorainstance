@@ -16,6 +16,7 @@ import logging
 import zipfile
 import tempfile
 import ConfigParser
+import contextlib
 
 import zc.buildout
 from hexagonit.recipe.download import Recipe as downloadRecipe
@@ -202,7 +203,7 @@ class Fedora3Worker(FedoraWorker):
         self.logger.info('Unpack war file %s to %s',
                          fedora_war,
                          dest_tomcat_webapp)
-        with zipfile.ZipFile(fedora_war) as zip_file:
+        with contextlib.closing(zipfile.ZipFile(fedora_war)) as zip_file:
             zip_file.extractall(dest_tomcat_webapp)
         self.logger.info("removing %s" % fedora_war)
         os.unlink(fedora_war)
@@ -258,8 +259,11 @@ class FedoraWorkerFactory:
         """
         if version is None:
             return None
-        prime_version = version[0]
-        return WORKER.get(prime_version, None)
+        worker = WORKER.get(version, None)
+        if worker is None:
+            prime_version = version[0]
+            worker = WORKER.get(prime_version, None)
+        return worker
 
 
 class FedoraRecipe:
