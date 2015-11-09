@@ -25,7 +25,7 @@ else:
 test_requires = requires + [
     'nose',
     'nose-cov',
-    'renose',
+    'rednose',
     'mock'    
 ]
 
@@ -66,3 +66,4 @@ setup(
         ]
     },
 )
+
