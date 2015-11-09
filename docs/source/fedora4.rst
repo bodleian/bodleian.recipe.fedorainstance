@@ -38,8 +38,8 @@ Here is what you see::
     >>> # you could have done it using commad line : buildout -c buildout.cfg
     >>> from zc.buildout.buildout import main
     >>> args = ['-c', 'buildout.cfg']
-    >>> main(args)
-    Creating directory '/home/ora/bodleian.recipe.fedorainstance/parts'.
+    >>> main(args) # doctest: +ELLIPSIS
+    Creating directory .../parts'.
     Installing fedorainstance.
     Downloading https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-4.2.0/fcrepo-webapp-4.2.0.war
     fedorainstance: Extracting package to /tmp/tomcat/webapps/fedora
@@ -55,3 +55,4 @@ Here is what you see::
     >>> os.unlink("buildout.cfg")
     >>> os.unlink(".installed.cfg")
     >>> patcher.stop()
+
