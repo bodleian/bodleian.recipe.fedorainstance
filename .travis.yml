@@ -6,7 +6,8 @@ env:
 python:
     - 2.7
 install:
-    - python setup.py install test
+    - python setup.py install
+    - pip install -r tests/requirements.txt
 script:
     make test
 after_success:

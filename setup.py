@@ -22,7 +22,7 @@ else:
         'zc.buildout',
         ]
 
-test_requires = requires + [
+test_requires = [
     'nose',
     'nose-cov',
     'rednose',
@@ -55,9 +55,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=requires,
-    extras_require=dict(
-        test=test_requires,
-    ),
+    extras_require={
+        'test' : test_requires,
+    },
     # TODO: Make multicore the default behavior in next major releases
     # since its solr default setup since 5.0.0
     entry_points={
