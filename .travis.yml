@@ -6,6 +6,8 @@ env:
 python:
     - 2.7
 install:
+    - source bin/activate
+    - buildout init
     - python setup.py install
     - pip install -r tests/requirements.txt
 script:
