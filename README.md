@@ -1,5 +1,5 @@
 bodleian.recipe.fedorainstance
-==========================================================
+==============================
 
 [![build](https://travis-ci.org/bodleian/bodleian.recipe.fedorainstance.svg)](https://travis-ci.org/bodleian/bodleian.recipe.fedorainstance)
 [![Coverage Status](https://coveralls.io/repos/bodleian/bodleian.recipe.fedorainstance/badge.svg)](https://coveralls.io/r/bodleian/bodleian.recipe.fedorainstance)
@@ -9,14 +9,14 @@ bodleian.recipe.fedorainstance is a `Buildout <http://buildout.org/>`_ recipe
 to install an unpacked fedora webapp to your existing Tomcat container.
 
 Usage
------------
+-----
 You must mention the recipe in your build out section::
 
     [your-build-target]
     recipe = bodleian.recipe.fedorainstance
 
 Supported options
-++++++++++++++++++++++++++
++++++++++++++++++
 
 the recipe supports the following options:
 
@@ -34,7 +34,7 @@ the recipe supports the following options:
     to 2.
 
 Optional options
-*********************
+****************
 
 ``url``
     the url to your fedora package. You may want to override the default 
@@ -49,7 +49,7 @@ Optional options
     override '/usr/bin/java' if your java is found somewhere else
 
 Fedora 2 and 3 specific options
-******************************
+*******************************
 
 ``overwrite-existing``
    a signal to the reciepe to clear the destination directory with the
@@ -85,7 +85,7 @@ An example is::
    Otherwise, this recipe cannot find the fedora war file for deploying it to tomcat
 
 Development
--------------------
+-----------
 
 Please fork it to your repo and then submit merge requests. 
 Here is how you do tests::
