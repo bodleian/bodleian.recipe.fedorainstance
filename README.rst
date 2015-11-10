@@ -1,6 +1,10 @@
 bodleian.recipe.fedorainstance
 ==========================================================
 
+[![build](https://travis-ci.org/bodleian/bodleian.recipe.fedorainstance.svg)](https://travis-ci.org/bodleian/bodleian.recipe.fedorainstance)
+[![Coverage Status](https://coveralls.io/repos/bodleian/bodleian.recipe.fedorainstance/badge.svg)](https://coveralls.io/r/bodleian/bodleian.recipe.fedorainstance)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/bodleian/bodleian.recipe.fedorainstance/blob/master/LICENSE)
+
 bodleian.recipe.fedorainstance is a `Buildout <http://buildout.org/>`_ recipe 
 to install an unpacked fedora webapp to your existing Tomcat container.
 
@@ -89,11 +93,3 @@ Here is how you do tests::
     $ python setup.py install
     $ pip install -r tests/requirements.txt
     $ make
-
-License
----------
-
-MIT license
-
-See LICENSE file for more details
-
