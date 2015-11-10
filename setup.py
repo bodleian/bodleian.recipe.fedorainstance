@@ -4,7 +4,9 @@ from setuptools import setup
 import os
 import sys
 
-version = '0.0.1'
+version = open(
+    os.path.join("bodleian", "recipe", "fedorainstance", "version.txt",)
+).read().strip()
 
 
 def read(name):
@@ -66,4 +68,3 @@ setup(
         ]
     },
 )
-
