@@ -6,6 +6,7 @@ env:
 python:
     - 2.7
 install:
+    - pip install zc.buildout
     - buildout init
     - python setup.py install
     - pip install -r tests/requirements.txt
