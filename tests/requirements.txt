@@ -3,3 +3,4 @@ nose-cov
 rednose
 mock
 zc.buildout
+createcoverage

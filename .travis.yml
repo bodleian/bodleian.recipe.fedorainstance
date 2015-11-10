@@ -6,12 +6,13 @@ env:
 python:
     - 2.7
 install:
-    - pip install zc.buildout
     - buildout init
     - python setup.py install
     - pip install -r tests/requirements.txt
 script:
     make test
 after_success:
-    coveralls
+  - bin/createcoverage run bin/test
+  - pip install -q coveralls
+  - coveralls
 
