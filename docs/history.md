@@ -6,6 +6,8 @@ Change log
 
 - Removed lib/ dir we believe was building an erroneous wheel
 
+- Removed lib/ dir we believe was building an erroneous wheel
+
 1.0.0 - 2015/11/10
 ------------------
 
