@@ -1,7 +1,7 @@
 Change log
 ==========
 
-1.0.1 (2018-01-18)
+1.0.2 (2018-01-18)
 ------------------
 
 - Removed lib/ dir we believe was building an erroneous wheel
