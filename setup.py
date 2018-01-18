@@ -5,7 +5,7 @@ import os
 import sys
 
 version = open(
-    os.path.join("bodleian", "recipe", "fedorainstance", "version.txt",)
+    os.path.join("bodleian", "recipe", "fedora", "version.txt",)
 ).read().strip()
 
 
@@ -37,7 +37,7 @@ long_description = '\n'.join([
 
 
 setup(
-    name='bodleian.recipe.fedorainstance',
+    name='bodleian.recipe.fedora',
     version=version,
     description="zc.buildout to configure a fedora instance",
     long_description=long_description,
@@ -50,7 +50,7 @@ setup(
     keywords='',
     author='CB',
     author_email='github@bodleian.ox.ac.uk',
-    url='http://pypi.python.org/pypi/bodleian.recipe.fedorainstance',
+    url='http://pypi.python.org/pypi/bodleian.recipe.fedora',
     license='MIT',
     packages=find_packages(exclude=['ez_setup']),
     namespace_packages=['bodleian', 'bodleian.recipe'],
@@ -64,7 +64,7 @@ setup(
     # since its solr default setup since 5.0.0
     entry_points={
         "zc.buildout": [
-            "default = bodleian.recipe.fedorainstance:FedoraRecipe"
+            "default = bodleian.recipe.fedora:FedoraRecipe"
         ]
     },
 )
