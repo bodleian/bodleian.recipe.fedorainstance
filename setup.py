@@ -49,7 +49,7 @@ setup(
     ],
     keywords='',
     author='CB',
-    author_email='wangc_2011@hotmail.com',
+    author_email='github@bodleian.ox.ac.uk',
     url='http://pypi.python.org/pypi/bodleian.recipe.fedorainstance',
     license='MIT',
     packages=find_packages(exclude=['ez_setup']),
