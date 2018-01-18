@@ -1,0 +1,55 @@
+==========================  [python setup.py test]  ==========================
+running test
+Searching for hexagonit.recipe.download
+Reading https://pypi.python.org/simple/hexagonit.recipe.download/
+Downloading https://pypi.python.org/packages/a8/1b/f1a5d8455a920582ecd434e7acba9d76c3f0d6a95b14e69d688252ab597d/hexagonit.recipe.download-1.7.1.tar.gz#md5=b168a3059d2ba12b772ec181bd9d10cb
+Best match: hexagonit.recipe.download 1.7.1
+Processing hexagonit.recipe.download-1.7.1.tar.gz
+Writing /tmp/easy_install-hP7bSf/hexagonit.recipe.download-1.7.1/setup.cfg
+Running hexagonit.recipe.download-1.7.1/setup.py -q bdist_egg --dist-dir /tmp/easy_install-hP7bSf/hexagonit.recipe.download-1.7.1/egg-dist-tmp-q_d306
+creating /home/ora/sites/ora/src/bodleian.recipe.fedorainstance/.eggs/hexagonit.recipe.download-1.7.1-py2.7.egg
+Extracting hexagonit.recipe.download-1.7.1-py2.7.egg to /home/ora/sites/ora/src/bodleian.recipe.fedorainstance/.eggs
+
+Installed /home/ora/sites/ora/src/bodleian.recipe.fedorainstance/.eggs/hexagonit.recipe.download-1.7.1-py2.7.egg
+running egg_info
+creating bodleian.recipe.fedorainstance.egg-info
+writing requirements to bodleian.recipe.fedorainstance.egg-info/requires.txt
+writing bodleian.recipe.fedorainstance.egg-info/PKG-INFO
+writing namespace_packages to bodleian.recipe.fedorainstance.egg-info/namespace_packages.txt
+writing top-level names to bodleian.recipe.fedorainstance.egg-info/top_level.txt
+writing dependency_links to bodleian.recipe.fedorainstance.egg-info/dependency_links.txt
+writing entry points to bodleian.recipe.fedorainstance.egg-info/entry_points.txt
+writing manifest file 'bodleian.recipe.fedorainstance.egg-info/SOURCES.txt'
+reading manifest file 'bodleian.recipe.fedorainstance.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'bodleian.recipe.fedorainstance.egg-info/SOURCES.txt'
+running build_ext
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+warning: no previously-included files found matching '.gitattributes'
+warning: no previously-included files found matching '*.cfg'
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+OK
+==============================  CheckRstFiles  ===============================
+Checking ./docs/source/fedora3.rst
+Noooo!!!
+Traceback (most recent call last):
+  File "/home/ora/sites/ora/lib/python2.7/site-packages/releaser-1.2-py2.7.egg/releaser/__init__.py", line 123, in release
+    step()
+  File "/home/ora/sites/ora/lib/python2.7/site-packages/releaser-1.2-py2.7.egg/releaser/steps.py", line 55, in __call__
+    warnings = check_rst_file(path)
+  File "/home/ora/sites/ora/lib/python2.7/site-packages/bag-1.2-py2.7.egg/bag/check_rst.py", line 94, in check_rst_file
+    return check_rst_document(source, path, settings=settings)
+  File "/home/ora/sites/ora/lib/python2.7/site-packages/bag-1.2-py2.7.egg/bag/check_rst.py", line 87, in check_rst_document
+    document.transformer.apply_transforms()
+  File "/home/ora/sites/ora/lib/python2.7/site-packages/docutils-0.14-py2.7.egg/docutils/transforms/__init__.py", line 171, in apply_transforms
+    transform.apply(**kwargs)
+  File "/home/ora/sites/ora/lib/python2.7/site-packages/docutils-0.14-py2.7.egg/docutils/transforms/universal.py", line 263, in apply
+    lc_smartquotes = self.document.settings.smartquotes_locales
+AttributeError: Values instance has no attribute 'smartquotes_locales'
+
+*********************************  ROLLBACK  *********************************
+Unable to roll back the step [python setup.py test]
+No steps to roll back, but the release process FAILED.
